@@ -1,3 +1,23 @@
+<?php
+    include 'connection.php';
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = $_POST['name'];
+        $score = $_POST['score'];
+    
+        $stmt = $conn->prepare("INSERT INTO scoreboard (name, score) VALUES (?, ?)");
+        $stmt->bind_param("si", $name, $score);
+    
+        if ($stmt->execute()) {
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+    
+        $stmt->close();
+    }
+    
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="de">
 
@@ -61,7 +81,7 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
@@ -93,28 +113,25 @@
         });
 
         $('.submit-name').click(function() {
-            var name = $('#userName').val();
+            var userName = $('#userName').val();
             var score = $('#score').text();
 
-            if (name && score) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'save_score.php',
-                    data: {
-                        name: name,
-                        score: score
-                    },
-                    success: function(response) {
-                        alert(response);
-                        location.reload();
-                    },
-                    error: function() {
-                        alert('Failed to save score');
-                    }
-                });
-            } else {
-                alert('Please enter your name');
-            }
+            $.ajax({
+                type: "POST",
+                url: "submit_score.php",
+                data: {
+                    name: userName,
+                    score: score
+                },
+                success: function(response) {
+                    console.log(response);
+                    alert("Score submitted successfully!");
+                    $('.reload-page').trigger('click');
+                },
+                error: function() {
+                    alert("Error in submitting the score.");
+                }
+            });
         });
 
         $('.reload-page').click(function() {
@@ -122,6 +139,7 @@
         });
     });
     </script>
+
 </body>
 
 </html>
