@@ -4,7 +4,7 @@ $username = "kliv@medtdb";
 $password = "Antonginger1"; 
 $dbname = "opendays";
 
-$ssl_ca = "C:\\Users\\Laurenz\\Downloads\\DigiCertGlobalRootG2.crt.pem";
+$ssl_ca = "\DigiCertGlobalRootG2.crt.pem";
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password, [
