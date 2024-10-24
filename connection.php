@@ -1,5 +1,4 @@
 <?php
-phpinfo();
 $servername = "medtdb.mysql.database.azure.com";
 $username = "kliv@medtdb";
 $password = "xxx"; 
