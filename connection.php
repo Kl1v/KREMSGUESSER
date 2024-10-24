@@ -1,6 +1,6 @@
 <?php
 $servername = "medtdb.mysql.database.azure.com";
-$username = "kliv";
+$username = "kliv@medtdb";
 $password = "Antonginger1";
 $dbname = "opendays";
 
