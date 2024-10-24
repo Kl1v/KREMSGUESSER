@@ -14,6 +14,6 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "Verbindung erfolgreich!";
 } catch (PDOException $e) {
-    die("Verbindung fehlgeschlagen: " . $e->getMessage());
+    die("Verbindung fehlgeschlagens: " . $e->getMessage());
 }
 ?>
