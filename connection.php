@@ -17,6 +17,4 @@ mysqli_ssl_set($conn, NULL, NULL, $ssl_ca, NULL, NULL);
 if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL | MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT)) {
     die("Verbindung fehlgeschlagen: " . mysqli_connect_error());
 }
-
-echo "Verbindung erfolgreich!";
 ?>
