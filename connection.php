@@ -1,4 +1,5 @@
 <?php
+phpinfo();
 $servername = "medtdb.mysql.database.azure.com";
 $username = "kliv@medtdb";
 $password = "xxx"; 
@@ -13,7 +14,6 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "Verbindung erfolgreich!";
 } catch (PDOException $e) {
-    phpinfo();
     die("Verbindung fehlgeschlagen: " . $e->getMessage());
 }
 ?>
