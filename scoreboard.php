@@ -18,6 +18,15 @@ function fetchScores($conn) {
     return $scores;
 }
 
+// Überprüfen, ob eine POST-Anfrage zum Abrufen der Punktestände gesendet wurde
+if (isset($_POST['fetch'])) {
+    $scores = fetchScores($conn);
+    $conn->close();
+    echo json_encode($scores); // Geben Sie die Scores als JSON zurück
+    exit; // Stoppen Sie die weitere Verarbeitung
+}
+
+// Standardmäßig die Punktestände abrufen, um sie beim Laden der Seite anzuzeigen
 $scores = fetchScores($conn);
 $conn->close();
 ?>
@@ -82,6 +91,9 @@ $conn->close();
             success: function(data) {
                 const scores = JSON.parse(data);
                 updateTable(scores);
+            },
+            error: function(xhr, status, error) {
+                console.error("Fehler beim Abrufen der Punktestände:", error);
             }
         });
     }
@@ -101,7 +113,7 @@ $conn->close();
         });
     }
 
-    setInterval(fetchScores, 1000);
+    setInterval(fetchScores, 1000); // Live-Aktualisierung alle 1 Sekunde
     </script>
 </body>
 
