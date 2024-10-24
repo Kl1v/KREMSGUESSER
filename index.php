@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
@@ -90,6 +90,31 @@
             $('#userValue').text(userGuess);
             $('#correctValue').text(random);
             $('#score').text(score);
+        });
+
+        $('.submit-name').click(function() {
+            var name = $('#userName').val();
+            var score = $('#score').text();
+
+            if (name && score) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'save_score.php',
+                    data: {
+                        name: name,
+                        score: score
+                    },
+                    success: function(response) {
+                        alert(response);
+                        location.reload();
+                    },
+                    error: function() {
+                        alert('Failed to save score');
+                    }
+                });
+            } else {
+                alert('Please enter your name');
+            }
         });
 
         $('.reload-page').click(function() {
