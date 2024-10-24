@@ -2,7 +2,6 @@
 
 include 'connection.php'; 
 
-
 $sql = "SELECT name, score FROM scoreboard ORDER BY score DESC";
 $result = $conn->query($sql);
 
@@ -15,10 +14,6 @@ if ($result->num_rows > 0) {
 }
 
 $conn->close();
-
-
-header('Content-Type: application/json');
-echo json_encode($scores);
 ?>
 
 <!DOCTYPE html>
@@ -28,8 +23,7 @@ echo json_encode($scores);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scoreboard - HTL Krems</title>
-    <link href=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     body {
         background-color: #f8f9fa;
@@ -56,39 +50,19 @@ echo json_encode($scores);
                     <th scope="col">Punkte</th>
                 </tr>
             </thead>
-            <tbody id="scoreboard">
-
+            <tbody>
+                <?php
+                foreach ($scores as $index => $player) {
+                    echo "<tr>";
+                    echo "<th scope='row'>" . ($index + 1) . "</th>";
+                    echo "<td>" . htmlspecialchars($player['name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($player['score']) . "</td>";
+                    echo "</tr>";
+                }
+                ?>
             </tbody>
         </table>
     </div>
-
-    <script>
-    function updateScoreboard() {
-        $.ajax({
-            url: 'scoreboard.php',
-            method: 'GET',
-            success: function(data) {
-                var scoreboard = $('#scoreboard');
-                scoreboard.empty();
-
-
-                data.forEach(function(player, index) {
-                    scoreboard.append('<tr><th scope="row">' + (index + 1) + '</th><td>' + player
-                        .name + '</td><td>' + player.score + '</td></tr>');
-                });
-            },
-            error: function() {
-                alert("Error fetching scoreboard.");
-            }
-        });
-    }
-
-    $(document).ready(function() {
-        updateScoreboard();
-
-        setInterval(updateScoreboard, 2000);
-    });
-    </script>
 </body>
 
 </html>

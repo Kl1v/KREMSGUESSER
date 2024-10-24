@@ -1,16 +1,20 @@
 <?php
     include 'connection.php';
 
+    // Prüfen, ob das Formular gesendet wurde
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $_POST['name'];
         $score = $_POST['score'];
     
+        // SQL-Statement vorbereiten
         $stmt = $conn->prepare("INSERT INTO scoreboard (name, score) VALUES (?, ?)");
         $stmt->bind_param("si", $name, $score);
     
+        // SQL ausführen und Fehler prüfen
         if ($stmt->execute()) {
+            echo "<div class='alert alert-success text-center'>Score erfolgreich gespeichert!</div>";
         } else {
-            echo "Error: " . $stmt->error;
+            echo "<div class='alert alert-danger text-center'>Error: " . $stmt->error . "</div>";
         }
     
         $stmt->close();
@@ -55,7 +59,8 @@
             Guess
         </button>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="post" action="" class="modal fade" id="exampleModal" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -69,17 +74,19 @@
                         <p>Dein Score: <span id="score"></span></p>
                         <div class="mt-3">
                             <label for="userName" class="form-label">Dein Name:</label>
-                            <input type="text" id="userName" class="form-control" placeholder="Gib deinen Namen ein">
+                            <input type="text" name="name" id="userName" class="form-control"
+                                placeholder="Gib deinen Namen ein" required>
+                            <input type="hidden" name="score" id="scoreInput">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary reload-page"
                             data-bs-dismiss="modal">Abbrechen</button>
-                        <button type="button" class="btn btn-primary submit-name">Absenden</button>
+                        <button type="submit" class="btn btn-primary">Absenden</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -110,28 +117,7 @@
             $('#userValue').text(userGuess);
             $('#correctValue').text(random);
             $('#score').text(score);
-        });
-
-        $('.submit-name').click(function() {
-            var userName = $('#userName').val();
-            var score = $('#score').text();
-
-            $.ajax({
-                type: "POST",
-                url: "submit_score.php",
-                data: {
-                    name: userName,
-                    score: score
-                },
-                success: function(response) {
-                    console.log(response);
-                    alert("Score submitted successfully!");
-                    $('.reload-page').trigger('click');
-                },
-                error: function() {
-                    alert("Error in submitting the score.");
-                }
-            });
+            $('#scoreInput').val(score);
         });
 
         $('.reload-page').click(function() {
