@@ -1,272 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KREMSGUESSER</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #ab8900;
-            color: white;
-            height: 100%;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff4646;
-        }
-        .upgrade-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .main-content {
-            display: flex;
-            flex: 1;
-        }
-        .sidebar {
-            width: 25%;
-        }
-        .menu-item {
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .menu-item.light {
-            font-weight: normal;
-        }
-        .menu-item.yellow {
-            color: #FFD700;
-        }
-        .center-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        /* Schatten für den Globus */
-        .globe-shadow {
-            width: 100px;
-            height: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            position: absolute;
-            bottom: 235px;
-            z-index: 0;
-            animation: shadow-scale 2s infinite ease-in-out;
-        }
-
-        /* Wrapper um das Bild und den Lichteffekt zu ermöglichen */
-        .globe-wrapper {
-            width: 400px;
-            height: 400px;
-            position: relative;
-            margin-bottom: 40px;
-            overflow: hidden;
-            animation: bounce 2s infinite ease-in-out;
-        }
-
-        /* Lichteffekt nur auf dem Globus */
-        .globe-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255, 255, 0, 0) 0%, rgba(255, 255, 255, 0.438) 50%, rgba(255, 255, 0, 0) 100%);
-            animation: light-sweep 7s infinite;
-            z-index: 999;
-        }
-
-        /* Globus-Image */
-        .globe-image {
-            width: 400px;
-            height: 400px;
-            object-fit: cover; /* Globus wird das Wrapper genau ausfüllen */
-            border-radius: 50%;
-            z-index: 2;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .new-trip-btn {
-            background-color: #FFCC00;
-            color: rgb(0, 0, 0);
-            margin-top: 50px;
-            padding: 12px 32px;
-            border-radius: 25px;
-            font-size: 20px;
-            font-weight: bold;
-            border: solid 1px black;
-            cursor: pointer;
-        }
-        .right-sidebar {
-            width: 25%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        .user-actions {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .icon {
-            width: 24px;
-            height: 24px;
-            margin-left: 10px;
-        }
-        .shop-btn {
-            background-color: #000000;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-        .notification {
-            background-color: #FFD700;
-            color: black;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-        .user-info {
-            background-color: #000000;
-            padding: 10px;
-            border-radius: 8px;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .user-name {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-        }
-        .user-level {
-            font-size: 14px;
-        }
-        .level-bar {
-            background-color: #FFD700;
-            height: 4px;
-            width: 33%;
-            border-radius: 2px;
-            margin-top: 5px;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        @keyframes shadow-scale {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.5);
-            }
-        }
-
-        @keyframes light-sweep {
-            0% {
-                left: -100%;
-            }
-            100% {
-                left: 100%;
-            }
-        }
-    </style>
+    <title>Tag der offenen Tür - HTL Krems</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="top-bar">
-            <div class="logo"><div style="display: flex; flex-direction: row;"><p style="color: #FFCC00;">KREMS</p><p style="color: black;">GUESSER</p></div></div>
-            <div class="upgrade-btn">UPGRADE ZU PREMIUM</div>
+    <header class="container">
+        <div class="logo text-center">
+            <img src="htlkrems-logo.png" alt="HTL Krems Logo" style="width: 300px; height: auto;" class="mb-4">
         </div>
-        <div class="main-content">
-            <div class="sidebar">
-                <div class="menu-item">EINZELSPIELER</div>
-                <div class="menu-item">MEHRSPIELER</div>
-                <div class="menu-item light">SHOP<span style="background-color: #ff4646; font-size: 12px; padding: 2px 4px; border-radius: 4px;">NEU</span></div>
+        <h1 class="text-center">OPEN DAYS SPIEL</h1>
+        <div class="row">
+            <div class="mb-5 text-center">
+                <h5>Ein zufälliger Wert zwischen 0 und 1000 wird generiert. </h5>
+                <h5 class="text-primary">Errate den Wert!</h5>
             </div>
-            <div class="center-content">
-                <div class="globe-wrapper" style="z-index: 1000; border-radius: 50%">
-                    <img src="GlobeKrems.png" alt="Globe" class="globe-image">
-                </div>
-                <div class="globe-shadow"></div>
-                <button class="new-trip-btn">SPIELEN</button>
+            <div class="col-lg-12 text-center">
+                <input type="range" class="container form-range" min="0" max="1000" id="customRange1" disabled>
             </div>
-            <div class="right-sidebar">
-                <!-- Google Ads Anzeige hier -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                     data-ad-slot="XXXXXXXXXX"
-                     data-ad-format="auto"></ins>
-                <script>
-                     (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+            <div class="col-lg-6">0</div>
+            <div class="col-lg-6 text-end">1000</div>
+        </div>
+    </header>
+    <div class="text-center">
+        <input type="number" id="userGuess" class="mb-4" placeholder="Gib deinen Wert ein"><br>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="guessButton" disabled>
+            Guess
+        </button>
+        
 
-                <div class="user-actions">
-                    <img src="/placeholder.svg?height=24&width=24" alt="Search" class="icon">
-                    <div class="shop-btn">
-                        <img src="/placeholder.svg?height=24&width=24" alt="Shop" class="icon">
-                        SHOP
-                    </div>
-                    <div class="notification">!</div>
-                    <img src="/placeholder.svg?height=40&width=40" alt="User avatar" class="user-avatar">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: black;">Dein Guess</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="user-info">
-                    <div class="user-name">
-                        USERNAME
-                        <img src="/placeholder.svg?height=16&width=16" alt="Dropdown" class="icon">
+                <div class="modal-body">
+                    <p>Dein Wert: <span id="userValue"></span></p>
+                    <p>Richtiger Wert: <span id="correctValue"></span></p>
+                    <p>_________________________</p>
+                    <p>Dein Score: <span id="score"></span></p>
+                    <div class="mt-3">
+                        <label for="userName" class="form-label">Dein Name:</label>
+                        <input type="text" id="userName" class="form-control" placeholder="Gib deinen Namen ein">
                     </div>
-                    <div class="user-level">LVL XY</div>
-                    <div class="level-bar"></div>
                 </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary reload-page" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary submit-name">Absenden</button>
+                </div>
+            </div>
             </div>
         </div>
     </div>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8532153935935184"
-     crossorigin="anonymous"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            var random = Math.floor(Math.random() * 1001); 
+            document.getElementById("customRange1").value = random;
+
+            $('#userGuess').on('input', function() {
+                var userGuess = $('#userGuess').val();
+                if (userGuess !== "" && !isNaN(userGuess)) {
+                    $('#guessButton').prop('disabled', false);
+                } else {
+                    $('#guessButton').prop('disabled', true);
+                }
+            });
+
+            $('#guessButton').click(function() {
+                var userGuess = parseInt($('#userGuess').val()); 
+                var x = 5 * (random - userGuess);
+                if (x < 0) x = x * (-1);
+                var score = Math.abs(1000 - x);
+                
+
+                $('#userValue').text(userGuess);
+                $('#correctValue').text(random);
+                $('#score').text(score);
+            });
+
+
+            $('.reload-page').click(function() {
+                location.reload();
+            });
+        });
+    </script>
 </body>
 </html>
